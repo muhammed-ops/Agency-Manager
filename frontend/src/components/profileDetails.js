@@ -1,11 +1,18 @@
 import './profiledetails.css'
 import axios from 'axios'
-const ProfileDetails = ({profiles}) =>{
+const ProfileDetails = ({profiles, setProfiles}) =>{
 
     const deleteProfile = (id) =>{
         axios.delete(`api/profiles/${id}`)
         .then(()=>{
             alert('User deleted')
+            axios.get('/api/profiles')
+        .then((response)=>{
+            setProfiles(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
         })
         .catch((err)=>{
             console.log(err)

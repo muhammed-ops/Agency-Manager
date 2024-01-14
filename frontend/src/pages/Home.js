@@ -38,8 +38,20 @@ const Home = () =>{
             onholiday : onHoliday
         })
         .then((response)=>{
-            alert('User Created refresh page')
+            alert('User Created')
+            axios.get('/api/profiles')
+            .then((response)=>{
+                setProfiles(response.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
             console.log(response.data)
+            setFirstName('')
+            setLastName('')
+            setJobTitle('')
+            setPay('')
+            setOnHoliday('')
         })
         .catch((err)=>{
             console.log(err)
@@ -53,7 +65,7 @@ const Home = () =>{
         <Navbar />
         <div className="container">
             <div className="box1">
-                <ProfileDetails profiles = {profiles} />
+                <ProfileDetails profiles = {profiles} setProfiles = {setProfiles}/>
             </div>
             <div className="box2">
             <form>
