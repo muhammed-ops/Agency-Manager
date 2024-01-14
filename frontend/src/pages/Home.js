@@ -13,7 +13,16 @@ const Home = () =>{
     const [onHoliday , setOnHoliday] = useState('')
     const [error , setError] = useState(false)
 
-
+    const upperCase = (str) =>{
+        let arr = str.split(' ')
+        console.log(arr)
+        let arr2 = []
+        for(let i=0;i<arr.length;i++){
+            arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1 , arr[i].length)
+            arr2.push(arr[i])
+        }
+        return arr2.join(' ')
+    }
 
     useEffect(()=>{
         axios.get('/api/profiles')
@@ -31,9 +40,9 @@ const Home = () =>{
             setError(true)
         }else{
         axios.post('/api/profiles',{
-            firstname : firstname,
-            lastname : lastname,
-            jobtitle : jobTitle,
+            firstname : upperCase(firstname),
+            lastname : upperCase(lastname),
+            jobtitle : upperCase(jobTitle),
             pay : pay,
             onholiday : onHoliday
         })
