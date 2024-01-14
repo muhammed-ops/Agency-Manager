@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const Profile = require('./profileModel.js')
+const User = require('./userModel.js')
 
 const app = express()
 app.use(express.json())
@@ -69,4 +70,24 @@ app.delete('/api/profiles/:id', async(req,res)=>{
     }else{
         res.status(500).json('no profile found')
     }
+})
+
+//login
+app.post('/api/login', (req,res)=>{
+    res.status(200).json('user logged in')
+})
+
+//signup
+app.post('/api/signup', async (req,res)=>{
+    const {email , password } = req.body
+    try{
+        const user = await User.signup(email , password)
+        res.status(200).json(email , user)
+
+    }
+    catch(err){
+        res.status(400).json(err.message)
+    }
+    res.status(200).json('user signed up')
+
 })
