@@ -10,6 +10,7 @@
 }
 .box1{
     flex-basis: 850px;
+    margin-left: 20px;
     /* border: 1px solid black; */
 
 }
@@ -59,4 +60,22 @@
     color: red;
     font-weight: bold;
     font-size: 13px;
+}
+.sort{
+    margin-right: 10px;
+}
+.sort p{
+    text-decoration: underline;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+.sort button{
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+.sort button:hover{
+    transform: scale(1.2);
+    border: 1px solid #15A31F ;
 }

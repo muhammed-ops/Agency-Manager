@@ -13,6 +13,45 @@ const Home = () =>{
     const [onHoliday , setOnHoliday] = useState('')
     const [error , setError] = useState(false)
 
+    
+    const sortByPay1 = () =>{
+        axios.get('/api/sortbypay1')
+        .then((response)=>{
+            setProfiles(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+    const sortByPayDescending = () =>{
+        axios.get('/api/sortbypay-1')
+        .then((response)=>{
+            setProfiles(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+    const sortByHolidayYes = () =>{
+        axios.get('/api/holidayyes')
+        .then((response)=>{
+            setProfiles(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+    
+    const sortByHolidayNo = () =>{
+        axios.get('/api/holidayno')
+        .then((response)=>{
+            setProfiles(response.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
     const upperCase = (str) =>{
         let arr = str.split(' ')
         console.log(arr)
@@ -66,6 +105,7 @@ const Home = () =>{
             console.log(err)
         })
     }
+        
     }
     
 
@@ -73,6 +113,15 @@ const Home = () =>{
         <>
         <Navbar />
         <div className="container">
+            <div className="sort">
+                <p>Sort</p>
+                <button onClick={sortByPay1}>Sort by Pay(ascending)</button> <br></br>
+                <button onClick={sortByPayDescending}>Sort by Pay(descending)</button> <br></br>
+                <p>Filter</p>
+                <button onClick={sortByHolidayYes}>OnHoliday(Yes)</button> <br></br>
+                <button onClick={sortByHolidayNo}>OnHoliday(No)</button> <br></br>
+            </div>
+            
             <div className="box1">
                 <ProfileDetails profiles = {profiles} setProfiles = {setProfiles}/>
             </div>

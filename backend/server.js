@@ -2,10 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const Profile = require('./profileModel.js')
-const User = require('./userModel.js')
 
 const app = express()
 app.use(express.json())
+
+const createToken = (_id) =>{
+    return jwt.sign({id : _id}, process.env.SECRET_KEY, {expiresIn : '3d'})
+} 
 
 
 //connect to database
@@ -36,6 +39,50 @@ app.get('/api/profiles/:id', async (req,res)=>{
         res.status(500).json('no profile found')
     }
 })
+
+//sort by pay(ascending)
+app.get('/api/sortbypay1', async (req, res) => {
+    try {
+      const profiles = await Profile.find().sort({ pay: 1 });
+      res.status(200).json(profiles);
+    } catch (error) {
+      console.error('Error fetching and sorting profiles:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+//sort by pay(descending)
+app.get('/api/sortbypay-1', async (req, res) => {
+    try {
+      const profiles = await Profile.find().sort({ pay: -1 });
+      res.status(200).json(profiles);
+    } catch (error) {
+      console.error('Error fetching and sorting profiles:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+//sort by holiday(yes)
+app.get('/api/holidayyes', async (req, res) => {
+    try {
+      const profiles = await Profile.find({onholiday : true})
+      res.status(200).json(profiles);
+    } catch (error) {
+      console.error('Error fetching and sorting profiles:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+//sort by holiday(no)
+app.get('/api/holidayno', async (req, res) => {
+    try {
+      const profiles = await Profile.find({onholiday : false})
+      res.status(200).json(profiles);
+    } catch (error) {
+      console.error('Error fetching and sorting profiles:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 //create a profile
 app.post('/api/profiles', async(req,res)=>{
@@ -70,24 +117,4 @@ app.delete('/api/profiles/:id', async(req,res)=>{
     }else{
         res.status(500).json('no profile found')
     }
-})
-
-//login
-app.post('/api/login', (req,res)=>{
-    res.status(200).json('user logged in')
-})
-
-//signup
-app.post('/api/signup', async (req,res)=>{
-    const {email , password } = req.body
-    try{
-        const user = await User.signup(email , password)
-        res.status(200).json(email , user)
-
-    }
-    catch(err){
-        res.status(400).json(err.message)
-    }
-    res.status(200).json('user signed up')
-
 })

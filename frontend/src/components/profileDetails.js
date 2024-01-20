@@ -5,7 +5,6 @@ const ProfileDetails = ({profiles, setProfiles}) =>{
     const deleteProfile = (id) =>{
         axios.delete(`api/profiles/${id}`)
         .then(()=>{
-            alert('User deleted')
             axios.get('/api/profiles')
         .then((response)=>{
             setProfiles(response.data)
