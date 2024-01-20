@@ -86,7 +86,6 @@ const Home = () =>{
             onholiday : onHoliday
         })
         .then((response)=>{
-            alert('User Created')
             axios.get('/api/profiles')
             .then((response)=>{
                 setProfiles(response.data)
